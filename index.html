@@ -1,0 +1,1368 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Agent Secret — Hello Doggie Festival 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Share+Tech+Mono&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --black: #050505;
+      --dark: #0d0d0d;
+      --card-bg: #111111;
+      --red: #cc1a1a;
+      --red-bright: #ff2222;
+      --amber: #d4a017;
+      --white: #f0ede8;
+      --grey: #888880;
+      --border: rgba(255,255,255,0.08);
+      --font-display: 'Bebas Neue', sans-serif;
+      --font-mono: 'Share Tech Mono', monospace;
+      --font-body: 'DM Sans', sans-serif;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: var(--font-body);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* NOISE OVERLAY */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.6;
+    }
+
+    /* SCAN LINES */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 4px);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .wrapper {
+      position: relative;
+      z-index: 1;
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 40px 20px 80px;
+    }
+
+    /* HEADER */
+    .header {
+      text-align: center;
+      margin-bottom: 48px;
+      position: relative;
+    }
+
+    .header-badge {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--red);
+      border: 1px solid var(--red);
+      padding: 4px 12px;
+      letter-spacing: 3px;
+      margin-bottom: 16px;
+      text-transform: uppercase;
+    }
+
+    .header h1 {
+      font-family: var(--font-display);
+      font-size: clamp(42px, 8vw, 80px);
+      line-height: 0.9;
+      letter-spacing: 2px;
+      color: var(--white);
+      margin-bottom: 8px;
+    }
+
+    .header h1 span {
+      color: var(--red);
+    }
+
+    /* header-sub and header-date defined above in campaign section */
+
+    /* RED DIVIDER */
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--red) 30%, var(--red) 70%, transparent);
+      margin: 24px 0;
+    }
+
+    /* CAMPAIGN LABEL */
+    .campaign-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--amber);
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    /* HEADER SUB — bigger */
+    .header-sub {
+      font-family: var(--font-mono);
+      font-size: 14px !important;
+      color: var(--grey);
+      letter-spacing: 2px;
+      margin-top: 12px;
+    }
+
+    .header-date {
+      font-family: var(--font-mono);
+      font-size: 15px !important;
+      color: var(--amber);
+      letter-spacing: 2px;
+      margin-top: 6px;
+    }
+
+    /* INTRO DESCRIPTION */
+    .intro-desc {
+      background: rgba(204,26,26,0.06);
+      border: 1px solid rgba(204,26,26,0.2);
+      border-left: 3px solid var(--red);
+      padding: 20px 24px;
+      margin-bottom: 36px;
+      font-family: var(--font-body);
+      font-size: 15px;
+      font-weight: 400;
+      color: rgba(240,237,232,0.85);
+      line-height: 1.7;
+    }
+
+    .intro-desc strong {
+      color: var(--amber);
+      font-weight: 600;
+    }
+
+    /* FORM FIELDS SECTION */
+    .form-section {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      position: relative;
+      margin-bottom: 0;
+    }
+
+    .form-section::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--amber);
+    }
+
+    .form-section-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--amber);
+      letter-spacing: 3px;
+      padding: 14px 20px 0;
+      display: block;
+    }
+
+    .form-grid {
+      padding: 16px 20px 20px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .form-grid .full-width { grid-column: 1 / -1; }
+
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .field-group label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--red);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .field-group input,
+    .field-group select,
+    .field-group textarea {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: var(--white);
+      font-family: var(--font-mono);
+      font-size: 13px;
+      padding: 10px 12px;
+      outline: none;
+      transition: border-color 0.2s;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+
+    .field-group input::placeholder,
+    .field-group textarea::placeholder {
+      color: rgba(136,136,128,0.5);
+      font-style: italic;
+    }
+
+    .field-group input:focus,
+    .field-group select:focus,
+    .field-group textarea:focus {
+      border-color: var(--amber);
+      background: rgba(212,160,23,0.04);
+    }
+
+    .field-group select {
+      cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23cc1a1a' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      padding-right: 32px;
+    }
+
+    .field-group select option {
+      background: #1a1a1a;
+      color: var(--white);
+    }
+
+    .field-group textarea {
+      resize: vertical;
+      min-height: 72px;
+      line-height: 1.5;
+    }
+
+    /* OPERATIONS SECTION */
+    .ops-section {
+      margin-top: 48px;
+      margin-bottom: 40px;
+    }
+
+    .ops-title {
+      font-family: var(--font-display);
+      font-size: 28px;
+      letter-spacing: 3px;
+      color: var(--white);
+      margin-bottom: 4px;
+    }
+
+    .ops-title span { color: var(--red); }
+
+    .ops-subtitle {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--grey);
+      letter-spacing: 3px;
+      margin-bottom: 24px;
+    }
+
+    .ops-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .ops-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 20px;
+      position: relative;
+    }
+
+    .ops-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+    }
+
+    .ops-card:nth-child(1)::before { background: var(--red); }
+    .ops-card:nth-child(2)::before { background: var(--amber); }
+    .ops-card:nth-child(3)::before { background: #4caf50; }
+    .ops-card:nth-child(4)::before { background: #2196f3; }
+
+    .ops-num {
+      font-family: var(--font-display);
+      font-size: 42px;
+      line-height: 1;
+      color: rgba(255,255,255,0.06);
+      position: absolute;
+      top: 10px; right: 14px;
+    }
+
+    .ops-card-title {
+      font-family: var(--font-display);
+      font-size: 18px;
+      letter-spacing: 2px;
+      color: var(--white);
+      margin-bottom: 8px;
+    }
+
+    .ops-card-text {
+      font-family: var(--font-body);
+      font-size: 13px;
+      color: rgba(240,237,232,0.65);
+      line-height: 1.6;
+    }
+
+    .ops-card-text strong { color: var(--amber); font-weight: 600; }
+
+    @media (max-width: 560px) {
+      .form-grid { grid-template-columns: 1fr; }
+      .ops-grid { grid-template-columns: 1fr; }
+    }
+
+    /* UPLOAD ZONE */
+    .upload-section {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 32px;
+    }
+
+    .upload-section::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--red);
+    }
+
+    .upload-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--red);
+      letter-spacing: 3px;
+      padding: 12px 20px 0;
+      display: block;
+    }
+
+    .drop-zone {
+      border: 1.5px dashed rgba(204, 26, 26, 0.4);
+      margin: 16px 20px 20px;
+      padding: 48px 24px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s;
+      position: relative;
+      background: rgba(204, 26, 26, 0.03);
+    }
+
+    .drop-zone:hover, .drop-zone.drag-over {
+      border-color: var(--red);
+      background: rgba(204, 26, 26, 0.07);
+    }
+
+    .drop-zone input {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+      width: 100%;
+      height: 100%;
+    }
+
+    .drop-icon {
+      font-size: 40px;
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .drop-title {
+      font-family: var(--font-display);
+      font-size: 22px;
+      letter-spacing: 2px;
+      color: var(--white);
+      margin-bottom: 6px;
+    }
+
+    .drop-sub {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--grey);
+      letter-spacing: 1px;
+    }
+
+    /* PREVIEW */
+    .preview-container {
+      display: none;
+      padding: 0 20px 20px;
+      position: relative;
+    }
+
+    .preview-container.visible { display: block; }
+
+    .preview-img {
+      width: 100%;
+      max-height: 320px;
+      object-fit: contain;
+      border: 1px solid var(--border);
+      display: block;
+      filter: grayscale(20%) contrast(1.05);
+    }
+
+    .preview-change {
+      position: absolute;
+      top: 10px; right: 30px;
+      background: rgba(0,0,0,0.8);
+      border: 1px solid var(--red);
+      color: var(--red);
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 1px;
+      padding: 4px 10px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .preview-change:hover {
+      background: var(--red);
+      color: var(--white);
+    }
+
+    /* GENERATE BUTTON */
+    .btn-generate {
+      width: 100%;
+      background: var(--red);
+      color: var(--white);
+      border: none;
+      padding: 20px;
+      font-family: var(--font-display);
+      font-size: 24px;
+      letter-spacing: 4px;
+      cursor: pointer;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 32px;
+    }
+
+    .btn-generate::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.08) 50%, transparent 100%);
+      transform: translateX(-100%);
+      transition: transform 0.5s;
+    }
+
+    .btn-generate:hover::after { transform: translateX(100%); }
+
+    .btn-generate:hover {
+      background: #e01e1e;
+      transform: translateY(-1px);
+      box-shadow: 0 8px 24px rgba(204,26,26,0.4);
+    }
+
+    .btn-generate:disabled {
+      background: #3a1010;
+      color: rgba(255,255,255,0.3);
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    /* STATUS */
+    .status-box {
+      display: none;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-left: 2px solid var(--amber);
+      padding: 16px 20px;
+      margin-bottom: 24px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--amber);
+      letter-spacing: 1px;
+    }
+
+    .status-box.visible { display: block; }
+    .status-box.error { border-left-color: var(--red); color: var(--red); }
+
+    .status-dot {
+      display: inline-block;
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--amber);
+      margin-right: 8px;
+      animation: pulse 1s infinite;
+    }
+
+    .status-box.error .status-dot { background: var(--red); animation: none; }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    /* RESULT SECTION */
+    .result-section {
+      display: none;
+    }
+
+    .result-section.visible { display: block; }
+
+    .result-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--red);
+      letter-spacing: 3px;
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* CANVAS CARD */
+    #cardCanvas {
+      display: block;
+      width: 100%;
+      border: 1px solid var(--border);
+      margin-bottom: 20px;
+    }
+
+    /* DOWNLOAD BUTTON */
+    .btn-download {
+      width: 100%;
+      background: transparent;
+      color: var(--amber);
+      border: 1.5px solid var(--amber);
+      padding: 18px;
+      font-family: var(--font-display);
+      font-size: 22px;
+      letter-spacing: 4px;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-bottom: 16px;
+    }
+
+    .btn-download:hover {
+      background: var(--amber);
+      color: var(--black);
+      box-shadow: 0 4px 20px rgba(212, 160, 23, 0.3);
+    }
+
+    .share-hint {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--grey);
+      text-align: center;
+      letter-spacing: 1px;
+      line-height: 1.8;
+      margin-bottom: 32px;
+    }
+
+    .share-hint span { color: var(--amber); }
+
+    /* RESET */
+    .btn-reset {
+      display: block;
+      width: 100%;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--grey);
+      padding: 14px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 2px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-reset:hover { border-color: var(--grey); color: var(--white); }
+
+    /* FOOTER */
+    .footer {
+      text-align: center;
+      margin-top: 60px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+    }
+
+    .footer-logo {
+      font-family: var(--font-display);
+      font-size: 20px;
+      letter-spacing: 3px;
+      color: var(--grey);
+      margin-bottom: 6px;
+    }
+
+    .footer-logo span { color: var(--red); }
+
+    .footer-sub {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: rgba(136,136,128,0.5);
+      letter-spacing: 2px;
+    }
+
+    /* CORNER DECORATIONS */
+    .corner-tl, .corner-br {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      border-color: var(--red);
+      border-style: solid;
+    }
+    .corner-tl { top: 0; left: 0; border-width: 2px 0 0 2px; }
+    .corner-br { bottom: 0; right: 0; border-width: 0 2px 2px 0; }
+
+    /* RESPONSIVE */
+    @media (max-width: 500px) {
+      .wrapper { padding: 24px 12px 60px; }
+      .drop-zone { padding: 32px 16px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <!-- HEADER -->
+    <header class="header">
+      <div class="header-badge">&#9632; CLASIFICAT &#9632; NIVEL MAXIM &#9632;</div>
+      <span class="campaign-label">— O campanie Hello Doggie —</span>
+      <h1>AGENT<br/><span>SECRET</span></h1>
+      <div class="divider"></div>
+      <div class="header-sub">HELLO DOGGIE FESTIVAL · BUCUREȘTI · PARCUL TITAN</div>
+      <div class="header-date">06 – 07 IUNIE 2026 · INSULA CÂINILOR</div>
+    </header>
+
+    <!-- INTRO DESCRIPTION -->
+    <div class="intro-desc">
+      Transformă-ți pătrupedul într-un <strong>agent secret</strong>. Completează dosarul secret al agentului tău, descarcă legitimația și infiltrează-te în feed-ul prietenilor tăi cu <strong>#AgentSecretHDF</strong>.
+    </div>
+
+    <!-- FORM FIELDS SECTION -->
+    <div class="form-section">
+      <span class="form-section-label">// DATE AGENT — COMPLETEAZĂ DOSARUL</span>
+      <div class="form-grid">
+
+        <div class="field-group">
+          <label>Numele agentului</label>
+          <input type="text" id="agentName" placeholder="ex: Gogoașă, Mitzu, Rex..." maxlength="40" />
+        </div>
+
+        <div class="field-group">
+          <label>Specia</label>
+          <select id="agentSpecie">
+            <option value="">— Selectează —</option>
+            <option value="câine">🐶 Câine</option>
+            <option value="pisică">🐱 Pisică</option>
+          </select>
+        </div>
+
+        <div class="field-group full-width">
+          <label>Nivel de experiență</label>
+          <select id="agentNivel">
+            <option value="">— Selectează nivelul —</option>
+            <option value="Începător">🟢 Începător — abia a intrat în agenție</option>
+            <option value="Standard">🔵 Standard — misiuni de rutină completate</option>
+            <option value="Periculos">🟠 Periculos — nu te apropia fără recompensă</option>
+            <option value="Priceput">🔴 Priceput — antrenat în arte marțiale moi</option>
+            <option value="Legend">⭐ Legend — clasificat la cel mai înalt nivel</option>
+          </select>
+        </div>
+
+        <div class="field-group full-width">
+          <label>Misiunea principală</label>
+          <select id="agentMisiune">
+            <option value="">— Selectează misiunea —</option>
+            <option value="Fură șosetele">🧦 Fură șosetele</option>
+            <option value="Sabotează bucătăria">🍳 Sabotează bucătăria</option>
+            <option value="Vânează șoareci">🐭 Vânează șoareci</option>
+            <option value="Ocupă patul și canapeaua">🛋️ Ocupă patul și canapeaua</option>
+            <option value="Supraveghează vecinii">👁️ Supraveghează vecinii</option>
+            <option value="Doarme subacoperire">😴 Doarme subacoperire</option>
+            <option value="Colectează jucării">🧸 Colectează jucării</option>
+            <option value="Extrage jucării și informații">🕵️ Extrage jucării și informații</option>
+            <option value="Fură inimi">❤️ Fură inimi</option>
+          </select>
+        </div>
+
+        <div class="field-group full-width">
+          <label>Abilitatea secretă</label>
+          <textarea id="agentAbilitate" placeholder="Descrie abilitatea secretă a agentului tău... Cu cât mai amuzant, cu atât mai bine!" maxlength="200"></textarea>
+        </div>
+
+      </div>
+    </div>
+
+    <div style="height:2px;background:linear-gradient(90deg,var(--red),var(--amber));margin-bottom:0;"></div>
+
+    <div class="upload-section" id="uploadSection">
+      <span class="upload-label">// IDENTIFICARE AGENT — PASUL 01</span>
+      <div class="drop-zone" id="dropZone">
+        <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp" />
+        <span class="drop-icon">🐾</span>
+        <div class="drop-title">ÎNCARCĂ POZA AGENTULUI</div>
+        <div class="drop-sub">JPG / PNG / WEBP · MAX 10MB</div>
+      </div>
+      <div class="preview-container" id="previewContainer">
+        <img id="previewImg" class="preview-img" alt="Preview" />
+        <button class="preview-change" id="changeBtn">↺ SCHIMBĂ</button>
+      </div>
+    </div>
+
+    <!-- GENERATE BUTTON -->
+    <button class="btn-generate" id="generateBtn" disabled>
+      &#9656; GENEREAZĂ DOSARUL SECRET
+    </button>
+
+    <!-- STATUS -->
+    <div class="status-box" id="statusBox">
+      <span class="status-dot"></span>
+      <span id="statusText">Inițializare protocol...</span>
+    </div>
+
+    <!-- RESULT -->
+    <div class="result-section" id="resultSection">
+      <div class="result-label">// DOSAR GENERAT — DESCARCĂ &amp; DISTRIBUIE</div>
+      <canvas id="cardCanvas" width="1080" height="1080"></canvas>
+      <button class="btn-download" id="downloadBtn">⬇ DESCARCĂ CARDUL</button>
+      <div class="share-hint">
+        Postează pe Instagram, TikTok sau Facebook cu<br/>
+        <span>#AgentSecretHDF · #HelloDoggieFestival · @hellodoggiero</span>
+      </div>
+      <button class="btn-reset" id="resetBtn">↺ GENEREAZĂ UN NOU AGENT</button>
+    </div>
+
+    <!-- OPERATIONS SECTION -->
+    <div class="ops-section">
+      <div class="ops-title">INSTRUCȚIUNI DE <span>OPERAȚIUNE</span></div>
+      <div class="ops-subtitle">// PROTOCOL ACTIVARE AGENT · 4 PAȘI · CLASIFICAT</div>
+      <div class="ops-grid">
+
+        <div class="ops-card">
+          <span class="ops-num">01</span>
+          <div class="ops-card-title">COMPLETEAZĂ DOSARUL</div>
+          <div class="ops-card-text">Adaugă fotografia blănosului tău și completează toate câmpurile. <strong>Cu cât mai amuzant, cu atât mai bine!</strong></div>
+        </div>
+
+        <div class="ops-card">
+          <span class="ops-num">02</span>
+          <div class="ops-card-title">GENEREAZĂ &amp; DESCARCĂ</div>
+          <div class="ops-card-text">Apasă butonul și generează dosarul secret. <strong>Descarcă imaginea direct</strong> pe telefon sau calculator.</div>
+        </div>
+
+        <div class="ops-card">
+          <span class="ops-num">03</span>
+          <div class="ops-card-title">POSTEAZĂ &amp; TĂGEAZĂ</div>
+          <div class="ops-card-text">Postează pe Instagram, Facebook sau TikTok cu <strong>#AgentSecretHDF</strong> și tagează <strong>@hellodoggiero</strong>.</div>
+        </div>
+
+        <div class="ops-card">
+          <span class="ops-num">04</span>
+          <div class="ops-card-title">VINO LA FESTIVAL</div>
+          <div class="ops-card-text">Cei mai creativi agenți vor fi selectați ca <strong>Agenți Oficiali HDF 2026</strong> și vor primi premii speciale! 🏆</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div class="footer-logo">HELLO<span>DOGGIE</span>.RO</div>
+      <div class="footer-sub">FESTIVAL 2026 · INTELLIGENCE DIVISION · CLASIFICAT</div>
+    </footer>
+  </div>
+
+  <script>
+    // ── STATE ──────────────────────────────────────────────────────────────
+    let selectedFile = null;
+    let imageBase64 = null;
+    let mediaType = null;
+    let agentData = null;
+    let stylizedImageUrl = null;
+
+    // ── ELEMENTS ───────────────────────────────────────────────────────────
+    const fileInput     = document.getElementById('fileInput');
+    const dropZone      = document.getElementById('dropZone');
+    const previewContainer = document.getElementById('previewContainer');
+    const previewImg    = document.getElementById('previewImg');
+    const changeBtn     = document.getElementById('changeBtn');
+    const generateBtn   = document.getElementById('generateBtn');
+    const statusBox     = document.getElementById('statusBox');
+    const statusText    = document.getElementById('statusText');
+    const resultSection = document.getElementById('resultSection');
+    const downloadBtn   = document.getElementById('downloadBtn');
+    const resetBtn      = document.getElementById('resetBtn');
+    const canvas        = document.getElementById('cardCanvas');
+    const ctx           = canvas.getContext('2d');
+
+    // Form fields
+    const fName     = () => document.getElementById('agentName').value.trim();
+    const fSpecie   = () => document.getElementById('agentSpecie').value;
+    const fNivel    = () => document.getElementById('agentNivel').value;
+    const fMisiune  = () => document.getElementById('agentMisiune').value;
+    const fAbilitate = () => document.getElementById('agentAbilitate').value.trim();
+
+    // ── FILE HANDLING ──────────────────────────────────────────────────────
+    fileInput.addEventListener('change', (e) => handleFile(e.target.files[0]));
+    changeBtn.addEventListener('click', () => { fileInput.value=''; fileInput.click(); });
+
+    dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('drag-over'); });
+    dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
+    dropZone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dropZone.classList.remove('drag-over');
+      const file = e.dataTransfer.files[0];
+      if (file) handleFile(file);
+    });
+
+    function handleFile(file) {
+      if (!file) return;
+      if (!['image/jpeg','image/png','image/webp'].includes(file.type)) {
+        showStatus('Format invalid. Folosește JPG, PNG sau WEBP.', 'error');
+        return;
+      }
+      if (file.size > 10 * 1024 * 1024) {
+        showStatus('Fișierul e prea mare. Max 10MB.', 'error');
+        return;
+      }
+      selectedFile = file;
+      mediaType = file.type;
+
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const dataUrl = e.target.result;
+        imageBase64 = dataUrl.split(',')[1];
+        previewImg.src = dataUrl;
+        previewContainer.classList.add('visible');
+        dropZone.style.display = 'none';
+        generateBtn.disabled = false;
+        hideStatus();
+      };
+      reader.readAsDataURL(file);
+    }
+
+    // ── GENERATE ───────────────────────────────────────────────────────────
+    generateBtn.addEventListener('click', async () => {
+      if (!imageBase64) return;
+      generateBtn.disabled = true;
+      resultSection.classList.remove('visible');
+
+      // Collect form data
+      const formData = {
+        numeAgent: fName(),
+        specie: fSpecie(),
+        nivel: fNivel(),
+        misiune: fMisiune(),
+        abilitateUser: fAbilitate(),
+      };
+
+      try {
+        // STEP 1 — Claude analysis
+        showStatus('Pasul 1/3 — Analiză AI în curs... Agentul este identificat.', 'loading');
+        const claudeRes = await fetch('/.netlify/functions/claude', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ imageBase64, mediaType, formData }),
+        });
+
+        // Always read as text first to avoid "Unexpected end of JSON" errors
+        const claudeText = await claudeRes.text();
+        if (!claudeText || claudeText.trim() === '') {
+          throw new Error('Funcția Claude a returnat un răspuns gol. Verifică API key-ul în Netlify → Environment Variables.');
+        }
+        let claudeJson;
+        try {
+          claudeJson = JSON.parse(claudeText);
+        } catch(e) {
+          throw new Error('Răspuns invalid de la server: ' + claudeText.substring(0, 150));
+        }
+        if (!claudeRes.ok) {
+          throw new Error(claudeJson.error || 'Eroare Claude API (status ' + claudeRes.status + ')');
+        }
+        agentData = claudeJson;
+
+        // Merge user-provided fields into agentData
+        if (formData.numeAgent) agentData.numeAgent = formData.numeAgent;
+        if (formData.specie) agentData.specie = formData.specie;
+        if (formData.nivel) agentData.nivelExperienta = formData.nivel;
+        if (formData.misiune) agentData.misiunePrincipala = formData.misiune;
+        if (formData.abilitateUser) agentData.abilitateSpeciala = formData.abilitateUser;
+
+        // STEP 2 — fal.ai image transformation
+        showStatus('Pasul 2/3 — Transformare imagine în stil noir... Agenții sunt în acțiune.', 'loading');
+        let falSuccess = false;
+        try {
+          const falRes = await fetch('/.netlify/functions/falai', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              imageBase64,
+              mediaType,
+              numeCod: agentData.numeCod,
+              specie: agentData.specie,
+            }),
+          });
+          const falText = await falRes.text();
+          if (falText && falText.trim() !== '') {
+            try {
+              const falData = JSON.parse(falText);
+              if (falData.imageUrl) {
+                stylizedImageUrl = falData.imageUrl;
+                falSuccess = true;
+              }
+            } catch(e) {
+              console.warn('fal.ai JSON parse failed:', falText.substring(0, 100));
+            }
+          }
+        } catch (falErr) {
+          console.warn('fal.ai failed, using original image:', falErr);
+        }
+
+        if (!falSuccess) {
+          stylizedImageUrl = null;
+        }
+
+        // STEP 3 — Generate canvas card
+        showStatus('Pasul 3/3 — Se compune dosarul secret... Aproape gata.', 'loading');
+        await generateCard();
+
+        hideStatus();
+        resultSection.classList.add('visible');
+        resultSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+      } catch (err) {
+        showStatus('Eroare: ' + err.message, 'error');
+        generateBtn.disabled = false;
+      }
+    });
+
+    // ── CARD GENERATION ────────────────────────────────────────────────────
+    async function generateCard() {
+      const W = 1080, H = 1080;
+      canvas.width = W;
+      canvas.height = H;
+
+      // BG
+      ctx.fillStyle = '#080808';
+      ctx.fillRect(0, 0, W, H);
+
+      // Noise texture overlay (subtle)
+      drawNoise();
+
+      // Draw the agent photo
+      await drawAgentPhoto();
+
+      // Dark overlay gradient for readability
+      const grad = ctx.createLinearGradient(0, 0, 0, H);
+      grad.addColorStop(0, 'rgba(0,0,0,0.45)');
+      grad.addColorStop(0.4, 'rgba(0,0,0,0.15)');
+      grad.addColorStop(0.65, 'rgba(0,0,0,0.7)');
+      grad.addColorStop(1, 'rgba(0,0,0,0.95)');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, W, H);
+
+      // Red accent stripe top
+      ctx.fillStyle = '#cc1a1a';
+      ctx.fillRect(0, 0, W, 6);
+
+      // Scan lines effect
+      drawScanLines();
+
+      // TOP SECTION
+      drawTopSection();
+
+      // BOTTOM DOSSIER SECTION
+      drawDossierSection();
+
+      // CORNER MARKS
+      drawCornerMarks();
+
+      // BARCODE
+      drawBarcode(W - 120, 60);
+
+      // STAMP
+      drawStamp();
+    }
+
+    function drawNoise() {
+      const imageData = ctx.createImageData(1080, 1080);
+      const data = imageData.data;
+      for (let i = 0; i < data.length; i += 4) {
+        const noise = Math.random() * 12;
+        data[i] = data[i+1] = data[i+2] = noise;
+        data[i+3] = 30;
+      }
+      ctx.putImageData(imageData, 0, 0);
+    }
+
+    function drawScanLines() {
+      ctx.save();
+      ctx.globalAlpha = 0.03;
+      ctx.fillStyle = '#000';
+      for (let y = 0; y < 1080; y += 4) {
+        ctx.fillRect(0, y, 1080, 2);
+      }
+      ctx.restore();
+    }
+
+    async function drawAgentPhoto() {
+      return new Promise((resolve) => {
+        const img = new Image();
+        img.crossOrigin = 'anonymous';
+
+        const onLoad = () => {
+          // Fill entire canvas with image (cover)
+          const ratio = img.width / img.height;
+          let sw = 1080, sh = 1080;
+          let sx = 0, sy = 0;
+          if (ratio > 1) { sw = 1080 * ratio; sx = -(sw - 1080) / 2; }
+          else { sh = 1080 / ratio; sy = -(sh - 1080) / 2; }
+
+          // Apply noir filter via canvas
+          ctx.save();
+          ctx.filter = 'grayscale(85%) contrast(1.3) brightness(0.85)';
+          ctx.drawImage(img, sx, sy, sw, sh);
+          ctx.filter = 'none';
+
+          // Sepia tint overlay
+          ctx.globalAlpha = 0.12;
+          ctx.fillStyle = '#1a0a00';
+          ctx.fillRect(0, 0, 1080, 1080);
+          ctx.globalAlpha = 1;
+          ctx.restore();
+          resolve();
+        };
+
+        img.onload = onLoad;
+        img.onerror = () => {
+          // Fallback: use original base64
+          img.src = `data:${mediaType};base64,${imageBase64}`;
+        };
+
+        if (stylizedImageUrl) {
+          img.src = stylizedImageUrl;
+        } else {
+          img.src = `data:${mediaType};base64,${imageBase64}`;
+        }
+      });
+    }
+
+    function drawTopSection() {
+      const d = agentData;
+
+      // CLASSIFIED badge
+      ctx.save();
+      ctx.fillStyle = '#cc1a1a';
+      ctx.fillRect(40, 32, 220, 30);
+      ctx.font = 'bold 14px "Share Tech Mono"';
+      ctx.fillStyle = '#fff';
+      ctx.textAlign = 'left';
+      ctx.fillText('■ STRICT CLASIFICAT ■', 52, 52);
+      ctx.restore();
+
+      // Dosar number
+      ctx.save();
+      ctx.font = '13px "Share Tech Mono"';
+      ctx.fillStyle = 'rgba(212,160,23,0.9)';
+      ctx.textAlign = 'left';
+      ctx.fillText((d.codDosar || 'HDG-2026-0001').toUpperCase(), 40, 88);
+      ctx.restore();
+
+      // AGENT SECRET title
+      ctx.save();
+      ctx.font = '900 108px "Bebas Neue"';
+      ctx.fillStyle = '#fff';
+      ctx.textAlign = 'left';
+      ctx.letterSpacing = '4px';
+      ctx.fillText('AGENT', 40, 195);
+      ctx.fillStyle = '#cc1a1a';
+      ctx.fillText('SECRET', 40, 295);
+      ctx.restore();
+    }
+
+    function drawDossierSection() {
+      const d = agentData;
+      const panelY = 600;
+      const panelH = 450;
+
+      // Panel background
+      ctx.save();
+      ctx.fillStyle = 'rgba(0,0,0,0.85)';
+      ctx.fillRect(0, panelY, 1080, panelH);
+
+      // Top border red line
+      ctx.fillStyle = '#cc1a1a';
+      ctx.fillRect(0, panelY, 1080, 3);
+      ctx.restore();
+
+      // Grid lines
+      ctx.save();
+      ctx.strokeStyle = 'rgba(255,255,255,0.05)';
+      ctx.lineWidth = 1;
+      for (let x = 40; x < 1080; x += 120) {
+        ctx.beginPath(); ctx.moveTo(x, panelY); ctx.lineTo(x, panelY + panelH); ctx.stroke();
+      }
+      ctx.restore();
+
+      // AGENT NAME — if provided by user
+      const agentDisplayName = d.numeAgent || null;
+      if (agentDisplayName) {
+        ctx.save();
+        ctx.font = '13px "Share Tech Mono"';
+        ctx.fillStyle = 'rgba(212,160,23,0.7)';
+        ctx.textAlign = 'left';
+        ctx.fillText('AGENT:', 40, panelY + 26);
+        ctx.font = 'bold 16px "Share Tech Mono"';
+        ctx.fillStyle = 'rgba(212,160,23,1)';
+        ctx.fillText(agentDisplayName.toUpperCase(), 110, panelY + 26);
+        ctx.restore();
+      }
+
+      // NOME DE COD — big
+      ctx.save();
+      ctx.font = '72px "Bebas Neue"';
+      ctx.fillStyle = '#fff';
+      ctx.textAlign = 'left';
+      const codeName = (d.numeCod || 'NECUNOSCUT').toUpperCase();
+      ctx.fillText(codeName, 40, panelY + (agentDisplayName ? 100 : 76));
+      ctx.restore();
+
+      // Underline after code name
+      const underlineY = panelY + (agentDisplayName ? 108 : 84);
+      ctx.save();
+      ctx.fillStyle = '#cc1a1a';
+      ctx.fillRect(40, underlineY, 580, 2);
+      ctx.restore();
+
+      // FIELDS — 2 column layout
+      const fieldsStartY = panelY + (agentDisplayName ? 128 : 104);
+      const fields = [
+        { label: 'SPECIE', value: (d.specie || '—').toUpperCase() },
+        { label: 'RASĂ', value: (d.rasa || '—').toUpperCase() },
+        { label: 'MISIUNE', value: d.misiunePrincipala || '—' },
+        { label: 'ABILITATE', value: d.abilitateSpeciala || '—' },
+      ];
+
+      fields.forEach((f, i) => {
+        const col = i < 2 ? 40 : 550;
+        const row = i < 2 ? (i * 70) : ((i - 2) * 70);
+        const ry = fieldsStartY + row;
+
+        ctx.save();
+        ctx.font = '11px "Share Tech Mono"';
+        ctx.fillStyle = '#cc1a1a';
+        ctx.textAlign = 'left';
+        ctx.fillText(f.label + ' :', col, ry);
+
+        ctx.font = '14px "Share Tech Mono"';
+        ctx.fillStyle = 'rgba(240,237,232,0.9)';
+        wrapText(ctx, f.value, col, ry + 20, 460, 18);
+        ctx.restore();
+      });
+
+      // NIVEL AMENINTARE + NIVEL EXPERIENTA side by side
+      const nivelY = panelY + (agentDisplayName ? 268 : 248);
+      ctx.save();
+
+      // Nivel amenintare (left)
+      ctx.font = '10px "Share Tech Mono"';
+      ctx.fillStyle = '#cc1a1a';
+      ctx.textAlign = 'left';
+      ctx.fillText('NIVEL AMENINȚARE :', 40, nivelY);
+
+      const nivel = (d.nivelAmenintare || 'CLASIFICAT').toUpperCase();
+      const nivelColors = { 'RIDICOL': '#4caf50', 'MODERAT': '#ff9800', 'RIDICAT': '#ff5722', 'EXTREM': '#cc1a1a', 'CLASIFICAT': '#d4a017' };
+      const nivelColor = nivelColors[nivel] || '#cc1a1a';
+      ctx.fillStyle = nivelColor;
+      ctx.fillRect(40, nivelY + 7, 230, 28);
+      ctx.font = 'bold 15px "Share Tech Mono"';
+      ctx.fillStyle = '#fff';
+      ctx.fillText('▸ ' + nivel, 52, nivelY + 25);
+
+      // Nivel experienta (right)
+      if (d.nivelExperienta) {
+        ctx.font = '10px "Share Tech Mono"';
+        ctx.fillStyle = '#d4a017';
+        ctx.fillText('NIVEL EXPERIENȚĂ :', 550, nivelY);
+        ctx.fillStyle = 'rgba(212,160,23,0.2)';
+        ctx.fillRect(550, nivelY + 7, 230, 28);
+        ctx.strokeStyle = 'rgba(212,160,23,0.6)';
+        ctx.lineWidth = 1;
+        ctx.strokeRect(550, nivelY + 7, 230, 28);
+        ctx.font = 'bold 14px "Share Tech Mono"';
+        ctx.fillStyle = '#d4a017';
+        ctx.fillText('★ ' + d.nivelExperienta.toUpperCase(), 562, nivelY + 25);
+      }
+      ctx.restore();
+
+      // TAGLINE
+      if (d.taglineSecret) {
+        ctx.save();
+        ctx.font = 'italic 18px "DM Sans"';
+        ctx.fillStyle = 'rgba(212,160,23,0.85)';
+        ctx.textAlign = 'center';
+        ctx.fillText('"' + d.taglineSecret + '"', 540, panelY + (agentDisplayName ? 330 : 310));
+        ctx.restore();
+      }
+
+      // HASHTAGS bottom strip
+      ctx.save();
+      ctx.fillStyle = '#cc1a1a';
+      ctx.fillRect(0, panelY + panelH - 52, 1080, 52);
+      ctx.font = '19px "Share Tech Mono"';
+      ctx.fillStyle = '#fff';
+      ctx.textAlign = 'center';
+      ctx.fillText('#AgentSecretHDF  ·  #HelloDoggieFestival  ·  @hellodoggiero', 540, panelY + panelH - 20);
+      ctx.restore();
+    }
+
+    function drawBarcode(x, y) {
+      ctx.save();
+      const barcodeData = agentData?.codDosar || 'HDG-2026-0000';
+      const barW = 80;
+      const barH = 35;
+      let bx = x - barW;
+
+      for (let i = 0; i < barcodeData.length; i++) {
+        const w = ((barcodeData.charCodeAt(i) % 3) + 1) * 1.5;
+        if (i % 2 === 0) {
+          ctx.fillStyle = 'rgba(240,237,232,0.7)';
+          ctx.fillRect(bx, y, w, barH);
+        }
+        bx += w + 1;
+      }
+
+      ctx.font = '8px "Share Tech Mono"';
+      ctx.fillStyle = 'rgba(240,237,232,0.5)';
+      ctx.textAlign = 'center';
+      ctx.fillText(barcodeData, x - barW / 2 + 10, y + barH + 12);
+      ctx.restore();
+    }
+
+    function drawCornerMarks() {
+      const size = 28, thick = 2;
+      const marks = [
+        [0, 0, 1, 1],
+        [1080 - size, 0, -1, 1],
+        [0, 1080 - size, 1, -1],
+        [1080 - size, 1080 - size, -1, -1],
+      ];
+
+      ctx.save();
+      ctx.strokeStyle = '#cc1a1a';
+      ctx.lineWidth = thick;
+
+      marks.forEach(([mx, my, dx, dy]) => {
+        ctx.beginPath();
+        ctx.moveTo(mx + dx * size, my);
+        ctx.lineTo(mx, my);
+        ctx.lineTo(mx, my + dy * size);
+        ctx.stroke();
+      });
+      ctx.restore();
+    }
+
+    function drawStamp() {
+      // Hello Doggie Festival stamp circle
+      const cx = 900, cy = 720, r = 68;
+      ctx.save();
+      ctx.globalAlpha = 0.18;
+
+      ctx.beginPath();
+      ctx.arc(cx, cy, r, 0, Math.PI * 2);
+      ctx.strokeStyle = '#cc1a1a';
+      ctx.lineWidth = 4;
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.arc(cx, cy, r - 10, 0, Math.PI * 2);
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+
+      ctx.font = 'bold 26px "Bebas Neue"';
+      ctx.fillStyle = '#cc1a1a';
+      ctx.textAlign = 'center';
+      ctx.fillText('HDF', cx, cy + 5);
+      ctx.font = '9px "Share Tech Mono"';
+      ctx.fillText('2026', cx, cy + 20);
+
+      // Circular text
+      const textArr = 'HELLO DOGGIE FESTIVAL · ';
+      const arcR = r - 5;
+      const startAngle = -Math.PI / 2 - (textArr.length * 0.13);
+      ctx.font = '10px "Share Tech Mono"';
+      for (let i = 0; i < textArr.length; i++) {
+        const angle = startAngle + i * 0.13;
+        ctx.save();
+        ctx.translate(cx + arcR * Math.cos(angle), cy + arcR * Math.sin(angle));
+        ctx.rotate(angle + Math.PI / 2);
+        ctx.fillText(textArr[i], 0, 0);
+        ctx.restore();
+      }
+
+      ctx.restore();
+    }
+
+    function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
+      const words = text.split(' ');
+      let line = '';
+      let currentY = y;
+      for (let n = 0; n < words.length; n++) {
+        const testLine = line + words[n] + ' ';
+        const metrics = ctx.measureText(testLine);
+        if (metrics.width > maxWidth && n > 0) {
+          ctx.fillText(line, x, currentY);
+          line = words[n] + ' ';
+          currentY += lineHeight;
+        } else {
+          line = testLine;
+        }
+      }
+      ctx.fillText(line, x, currentY);
+    }
+
+    // ── DOWNLOAD ───────────────────────────────────────────────────────────
+    downloadBtn.addEventListener('click', () => {
+      const link = document.createElement('a');
+      const codeName = (agentData?.numeCod || 'agent-secret').toLowerCase().replace(/\s+/g, '-');
+      link.download = `agent-secret-${codeName}-hdf2026.png`;
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    });
+
+    // ── RESET ──────────────────────────────────────────────────────────────
+    resetBtn.addEventListener('click', () => {
+      selectedFile = null; imageBase64 = null; mediaType = null;
+      agentData = null; stylizedImageUrl = null;
+      fileInput.value = '';
+      document.getElementById('agentName').value = '';
+      document.getElementById('agentSpecie').value = '';
+      document.getElementById('agentNivel').value = '';
+      document.getElementById('agentMisiune').value = '';
+      document.getElementById('agentAbilitate').value = '';
+      previewContainer.classList.remove('visible');
+      dropZone.style.display = '';
+      generateBtn.disabled = true;
+      resultSection.classList.remove('visible');
+      hideStatus();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // ── HELPERS ────────────────────────────────────────────────────────────
+    function showStatus(msg, type = 'loading') {
+      statusBox.className = 'status-box visible' + (type === 'error' ? ' error' : '');
+      statusText.textContent = msg;
+    }
+
+    function hideStatus() {
+      statusBox.classList.remove('visible');
+    }
+  </script>
+</body>
+</html>

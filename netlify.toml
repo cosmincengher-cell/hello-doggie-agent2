@@ -1,0 +1,17 @@
+[build]
+  functions = "netlify/functions"
+
+[functions]
+  node_bundler = "esbuild"
+
+[functions."claude"]
+  timeout = 26
+
+[functions."falai"]
+  timeout = 26
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
